@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+    tools {
+        terraform 'terraform-14'
+    }
+    stages{
+        stage('Git Checkout'){
+            steps{
+                git branch: 'main', credentialsId: 'c582bb63-30ae-44a9-8f43-d078ef5d81d9', url: 'https://github.com/patelsaheb29/terraformdemo'
+            }
+        }
+        
+        stage('Terraform Init'){
+            steps{
+                sh 'terraform init'
+            }
+        }
+        
+        stage('Terraform Apply'){
+            steps{
+                sh 'terraform apply --auto-approve'
+            }
+        }
+    }
+
+}
